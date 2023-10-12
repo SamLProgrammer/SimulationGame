@@ -44,7 +44,7 @@ public class Hero {
     }
 
     public double getSize() {
-        return (screenDimensionsVector.getX() + screenDimensionsVector.getY()) / 70;
+        return (screenDimensionsVector.getX() + screenDimensionsVector.getY()) / 50;
     }
 
     public Vector2D getPosition() {
@@ -116,14 +116,12 @@ public class Hero {
     }
 
     public void moveUp(double dt) {
-        Vector2D moveUpVector2D = new Vector2D(0, -1);
-        position.add(moveUpVector2D.normalize().scaleVector(dt / 5));
+        position.add(directionVector.normalize().scaleVector(dt / 10));
         heroMovementEngine.setUpMovementTime(System.currentTimeMillis());
     }
 
     public void moveDown(double dt) {
-        Vector2D moveDownVector2D = new Vector2D(0, 1);
-        position.add(moveDownVector2D.normalize().scaleVector(dt / 5));
+        position.add(directionVector.normalize().scaleVector(-1*(dt / 10)));
         heroMovementEngine.setDownMovementTime(System.currentTimeMillis());
     }
 

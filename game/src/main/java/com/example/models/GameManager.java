@@ -59,8 +59,12 @@ public class GameManager {
                 directionVector,
                 degrees,
                 b,
-                new Vector2D(hero.getX() - bulletBodyImageHolder.getBufferedSprite().getWidth() / 6,
-                        hero.getY() - bulletBodyImageHolder.getBufferedSprite().getHeight() / 6),
+                // new Vector2D(hero.getX() - bulletBodyImageHolder.getBufferedSprite().getWidth() / 6,
+                //         hero.getY() - bulletBodyImageHolder.getBufferedSprite().getHeight() / 6),
+                // new Vector2D(hero.getX() - hero.getBodyImageHolder().getBufferedSprite().getWidth() / 12,
+                //         hero.getY() - hero.getBodyImageHolder().getBufferedSprite().getHeight() / 12),
+                new Vector2D(hero.getX() ,
+                        hero.getY()),
                 screenDimensions));
     }
 

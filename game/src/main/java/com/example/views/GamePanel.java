@@ -47,12 +47,6 @@ public class GamePanel extends JPanel {
                 g2.drawImage(gm.getHero().getCurrentGunAT().filter(gunBufferedHeroSprite, null),
                         (int) gm.getHero().getX(),
                         (int) gm.getHero().getY(), null);
-
-                g2.setColor(Color.ORANGE);
-                g2.fillOval((int)(gm.getHero().getX() + gm.getHero().getDirectionVector().getX() + gunBufferedHeroSprite.getWidth()/6), 
-                (int) (gm.getHero().getY() + gm.getHero().getDirectionVector().getY() + gunBufferedHeroSprite.getHeight()/2), 
-                4, 4);
-                g2.drawString(gm.getHero().getHeroMovementEngine().getRotationDegreesInDegrees() +"", 100, 100);
             }
         }
     }

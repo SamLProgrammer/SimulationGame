@@ -37,12 +37,11 @@ public class HeroMovementEngine extends KeyAdapter {
             rotationDegrees += degrees;
             double h = 2;
 
-            double a = rotationDegrees;
+            double a = rotationDegrees + Math.toRadians(-90);
             double x = h * Math.cos(a);
             double y = h * Math.sin(a);
 
             direction = new Vector2D(x, y);
-            direction = direction.normalize().scale(100);
             hero.setDirectionVector(direction);
         }
     }
@@ -57,12 +56,11 @@ public class HeroMovementEngine extends KeyAdapter {
             rotationDegrees += degrees;
 
             double h = 2;
-            double a = rotationDegrees;
+            double a = rotationDegrees + Math.toRadians(-90);
             double x = h * Math.cos(a);
             double y = h * Math.sin(a);
 
             direction = new Vector2D(x, y);
-            direction = direction.normalize().scale(100);
             hero.setDirectionVector(direction);
         }
     }

@@ -44,7 +44,7 @@ public class Bullet {
     }
 
     public boolean move(double dt, double rightBoundary, double bottomBoundary) {
-            position.add(directionVector.scaleVector(dt));
+            position.add(directionVector.scaleVector(dt/5));
             return alive =(position.getX() > 0 && position.getX() < rightBoundary) && 
                 (position.getY() > 0 && position.getY() < bottomBoundary);
     }
