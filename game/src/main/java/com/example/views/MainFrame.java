@@ -1,17 +1,15 @@
 package com.example.views;
 
-
 import javax.swing.JFrame;
-import java.awt.geom.AffineTransform;
-import com.example.models.Hero;
+import com.example.models.GameManager;
 
 public class MainFrame extends JFrame {
 
     private GamePanel gamePanel;
 
-    public MainFrame(double screenWidth, double screenHeight, Hero hero) {
-        initProperties(screenWidth, screenHeight);
-        initComponents(hero);
+    public MainFrame(GameManager gm) {
+        initProperties(gm.getScreenWidth(), gm.getScreenHeight());
+        initComponents(gm);
     }
 
     private void initProperties(double screenWidth, double screenHeight) {
@@ -26,12 +24,12 @@ public class MainFrame extends JFrame {
         setSize((int) screenWidth, (int) screenHeight);
     }
 
-    private void initComponents(Hero hero) {
-        gamePanel = new GamePanel(hero);
+    private void initComponents(GameManager gm) {
+        gamePanel = new GamePanel(gm);
         add(gamePanel);
     }
 
-    public void refresh(Hero hero) {
-        gamePanel.refresh(hero);
+    public void refresh() {
+        gamePanel.refresh();
     }
 }

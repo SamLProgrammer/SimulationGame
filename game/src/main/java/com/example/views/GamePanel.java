@@ -3,28 +3,29 @@ package com.example.views;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.geom.AffineTransform;
-
+import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
-import com.example.models.Hero;
+import com.example.models.Bullet;
+import com.example.models.GameManager;
 
 public class GamePanel extends JPanel {
 
-    private Hero hero;
+    private GameManager gm;
 
-    public GamePanel(Hero hero) {
-        initProperties(hero);
+    public GamePanel(GameManager gm) {
+        initProperties(gm);
         initComponents();
     }
 
-    private void initProperties(Hero hero) {
+    private void initProperties(GameManager gm) {
         setBackground(Color.black);
-        this.hero = hero;
+        this.gm = gm;
     }
 
     private void initComponents() {
-        addMouseMotionListener(hero.getHeroMouseEngine());
+        addMouseMotionListener(gm.getHero().getHeroMouseEngine());
+        addMouseListener(gm.getHero().getHeroShotEngine());
+        addKeyListener(gm.getHero().getHeroMovementEngine());
         setFocusable(true);
     }
 
@@ -32,25 +33,41 @@ public class GamePanel extends JPanel {
         super.paint(g);
         Graphics2D g2 = (Graphics2D) g;
         paintHero(g2);
+        paintbullets(g2);
     }
 
     private void paintHero(Graphics2D g2) {
-        if (hero.getCurrentAt() != null) {
-            g2.drawImage(hero.getGunImageHolder().getBufferedSprite(), null, (int) hero.getX(), (int) hero.getY());
-            int x = (int) hero.getX();
-            int y = (int) hero.getY();
+        if (gm.getHero() != null) {
+            BufferedImage gunBufferedHeroSprite = gm.getHero().getGunImageHolder().getBufferedSprite();
+            BufferedImage bodyBufferedHeroSprite = gm.getHero().getBodyImageHolder().getBufferedSprite();
+            if (gm.getHero().getCurrentGunAT() != null) {
+                g2.drawImage(gm.getHero().getCurrentBodyAt().filter(bodyBufferedHeroSprite, null),
+                        (int) gm.getHero().getX(),
+                        (int) gm.getHero().getY(), null);
+                g2.drawImage(gm.getHero().getCurrentGunAT().filter(gunBufferedHeroSprite, null),
+                        (int) gm.getHero().getX(),
+                        (int) gm.getHero().getY(), null);
 
-            Image gunImage = hero.getGunImageHolder().getBufferedSprite();
-
-            AffineTransform at = AffineTransform.getTranslateInstance(x, y);
-            at.rotate(Math.toRadians(45), gunImage.getWidth(null) / 2, gunImage.getHeight(null) / 2);
-            g2.setTransform(at);
-            g2.drawImage(gunImage, 100, 100, null);
+                g2.setColor(Color.ORANGE);
+                g2.fillOval((int)(gm.getHero().getX() + gm.getHero().getDirectionVector().getX() + gunBufferedHeroSprite.getWidth()/6), 
+                (int) (gm.getHero().getY() + gm.getHero().getDirectionVector().getY() + gunBufferedHeroSprite.getHeight()/2), 
+                4, 4);
+                g2.drawString(gm.getHero().getHeroMovementEngine().getRotationDegreesInDegrees() +"", 100, 100);
+            }
         }
     }
 
-    public void refresh(Hero hero) {
-        this.hero = hero;
+    private void paintbullets(Graphics2D g2) {
+        if (gm.getBullets() != null) {
+            for (Bullet bullet : gm.getBullets()) {
+                g2.drawImage(bullet.getCurrentAt().filter(bullet.getBodyImageHolder().getBufferedSprite(), null),
+                        (int) bullet.getX(),
+                        (int) bullet.getY(), null);
+            }
+        }
+    }
+
+    public void refresh() {
         repaint();
     }
 }

@@ -1,17 +1,14 @@
 package com.example.controller;
 
-import java.awt.Toolkit;
-
-import com.example.engine.Vector2D;
-import com.example.models.Hero;
+import com.example.engine.TimeFrame;
+import com.example.models.GameManager;
 import com.example.views.MainFrame;
 
 public class Controller {
 
-    private Hero hero;
     private MainFrame mf;
-    private double screenWidth;
-    private double screenHeight;
+    private GameManager gm;
+    private TimeFrame tf;
 
     public Controller() {
         initComponents();
@@ -19,9 +16,11 @@ public class Controller {
     }
 
     private void initGameThread() {
+        tf = new TimeFrame();
         new Thread(() -> { 
             while (true) {
-                mf.refresh(hero);
+                gm.move(tf.getDT());
+                mf.refresh();
                 try {
                     Thread.sleep(60); 
                 } catch (InterruptedException e) {
@@ -33,12 +32,8 @@ public class Controller {
     }
 
     private void initComponents() {
-        this.screenWidth = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
-        this.screenHeight = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
-        hero = new Hero(new Vector2D(screenWidth / 2, screenHeight / 2),
-                new Vector2D(10.0, 10.0),
-                new Vector2D(screenWidth, screenHeight));
-        mf = new MainFrame(screenWidth, screenHeight, hero);
+        gm = new GameManager();
+        mf = new MainFrame(gm);
     }
 
 }
